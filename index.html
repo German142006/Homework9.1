@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JS в HTML</title>
+</head>
+
+<body>
+
+  <script>
+    
+    let company = {
+  sales: [
+    { name: 'John', salary: 1000 },
+    { name: 'Alice', salary: 600 }
+  ],
+  development: {
+    web: [
+      { name: 'Peter', salary: 2000 },
+      { name: 'Alex', salary: 1800 }
+    ],
+    internals: [
+      { name: 'Jack', salary: 1300 }
+    ]
+  }
+};
+
+function sumSalaries(department) {
+  let totalSalary = 0;
+
+  // Ітеруємось по ключам об'єкта department
+  for (let key in department) {
+    // Якщо значення ключа є масивом, ітеруємось по елементах масиву
+    if (Array.isArray(department[key])) {
+      department[key].forEach(employee => {
+        totalSalary += employee.salary;
+      });
+    }
+    // Якщо значення ключа є об'єктом, рекурсивно викликаємо sumSalaries
+    else if (typeof department[key] === 'object') {
+      totalSalary += sumSalaries(department[key]);
+    }
+  }
+
+  return totalSalary;
+}
+
+// Виклик функції для об'єкта company
+let total = sumSalaries(company);
+console.log(total); // Виведе загальну суму всіх зарплат: 8700
+
+
+  </script>
+
+</body>
+
+</html>
